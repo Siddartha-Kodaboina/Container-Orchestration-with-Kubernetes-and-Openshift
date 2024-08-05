@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-md-name
+  labels:
+    app: node-md-labels-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: node-spec-selector-label
+  template:
+    metadata:
+      labels:
+        app: node-spec-selector-label
+    spec:
+      containers:
+      - name: node-spec-template-spec-container
+        image: stevesiddu49/node-web-app:v2
+        volumeMounts:
+          - name: config-volume
+            mountPath: /opt
+        ports:
+        - containerPort: 8000
+      volumes:
+        - name: config-volume
+          configMap:
+            name: game-demo
